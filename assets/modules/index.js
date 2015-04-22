@@ -1,21 +1,19 @@
 require("angular");
 require('angular-ui-router');
+require("./phonecat")
 // var jQuery = require('jquery');
+// jQuery('body').html(template);
 
 require("./style.scss");
 
-var template = require("./file.jade");
-var newsTemplate = require("./news.jade");
-// jQuery('body').html(template);
+var homeTemplate = require("./home.jade");
 
 /* App Module */
+var phonecatApp = angular.module('phonecatApp', ['ui.router', 'phoneModule']);
 
-var phonecatApp = angular.module('phonecatApp', ['ui.router']);
-
-phonecatApp.run(function($templateCache) {
-  $templateCache.put('templateId.html', template());
-  $templateCache.put('newsId.html', newsTemplate());
-});
+phonecatApp.run(["$templateCache", function($templateCache) {
+  $templateCache.put('homeTemplate.html', homeTemplate());
+}]);
 
 phonecatApp.config(["$stateProvider", "$urlRouterProvider", "$locationProvider",
   function($stateProvider, $urlRouterProvider, $locationProvider) {
@@ -25,19 +23,10 @@ phonecatApp.config(["$stateProvider", "$urlRouterProvider", "$locationProvider",
     .state('home', {
       url: "/",
       templateProvider: function($templateCache){
-        return $templateCache.get('templateId.html');
+        return $templateCache.get('homeTemplate.html');
       },
       controller: function($scope) {
       }
-    })
-    .state('news', {
-      url: "/news",
-      controller: function($scope) {
-        $scope.items = ["A", "List", "Of", "Items"];
-      },
-      templateProvider: function($templateCache){
-        return $templateCache.get('newsId.html');
-      },
     });
 }]);
 

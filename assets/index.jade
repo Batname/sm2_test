@@ -10,7 +10,9 @@ html(lang= locale, ng-app="phonecatApp")
       li
         a.lead(ui-sref="home", style="color:white") home
       li
-        a.lead(ui-sref="news", style="color:white") news
+        a.lead(ui-sref="phones", style="color:white") phones
+      li
+        a.lead(ui-sref="phonesDetails({phoneId: 10})", style="color:white") Phone id  
     hr
     div(ui-view)
     script(src="/bundle/phonecat.js")

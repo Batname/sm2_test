@@ -1,0 +1,7 @@
+{
+  "verbose": true,
+  "ignore": ["*.test.js", "node_modules/*", "assets/*", "public/*", "webpack.config.js"],
+  "execMap": {
+    "pde": ""
+  }
+}

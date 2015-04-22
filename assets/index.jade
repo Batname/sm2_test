@@ -1,0 +1,16 @@
+doctype html
+html(lang= locale, ng-app="phonecatApp")
+  head
+    base(href='/')
+    title= pageTitle
+    link(href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css", rel="stylesheet")
+  body
+    hr
+    ul
+      li
+        a.lead(ui-sref="home", style="color:white") home
+      li
+        a.lead(ui-sref="news", style="color:white") news
+    hr
+    div(ui-view)
+    script(src="/bundle/phonecat.js")

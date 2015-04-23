@@ -1,6 +1,7 @@
 var path = require("path");
 var webpack = require("webpack");
 var BowerWebpackPlugin = require('bower-webpack-plugin');
+var bourbon = require('node-bourbon').includePaths;
 module.exports = {
   cache: true,
   entry: {
@@ -14,8 +15,10 @@ module.exports = {
   module: {
     loaders: [
       { test: /\.css$/,loader: "style-loader!css-loader" },
-      {test: /\.scss$/,loader: "style!css!sass"},
-      { test: /\.jade$/, loader: "jade" }
+      { test: /\.jade$/, loader: "jade" },
+      { test: /\.json$/, loader: 'json' },
+      { test: /\.js$/, exclude: /node_modules/, loader: 'babel-loader'},
+      { test: /\.scss$/, loader: "style!css!sass?includePaths[]=" + bourbon }
 
     ]
   },
@@ -23,7 +26,9 @@ module.exports = {
     alias: {
       // Bind version of jquery
       jquery:  "/assets/bower_components/jquery/dist/jquery.js",
-    }
+    },
+    modulesDirectories: ['node_modules'],
+    extensions: ['', '.js', '.json']
   },
   plugins: [
     new BowerWebpackPlugin({

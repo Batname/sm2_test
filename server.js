@@ -5,11 +5,20 @@ let koa = require("koa"),
     fs = require("co-fs"),
     route = require("koa-route"),
     request = require('co-request'),
+    send = require('koa-send'),
+    cors = require('koa-cors'),
     serve = require('koa-static');
 
 let app = koa();
 require('koa-qs')(app, 'extended');
 let render = views(__dirname + "/assets", { map: { html: 'jade' }});
+
+app.use(cors({
+  maxAge: 1000,
+  credentials: true,
+  methods: 'GET, HEAD, OPTIONS, PUT, POST, DELETE',
+  headers: 'Origin, X-Requested-With, Content-Type, Accept, Authorization'
+}));
 
 app.use(serve('public'));
 
@@ -20,7 +29,7 @@ app.use(route.get("/", function *() {
   this.body = body;
 }));
 
-app.use(route.get("/phones", function *() {
+app.use(route.get("/api/phones", function *() {
   try{
     let file;
     if(!this.query.file) {
@@ -35,13 +44,20 @@ app.use(route.get("/phones", function *() {
   }
 }));
 
-
-app.use(function *pageNotFound(next){
-  yield next;
-  if (404 != this.status) return;
-  this.redirect('/');
-  this.status = 301;
-})
+var sendOpts = {root: 'client', maxage: 1000};
+app.use(function *(next) {
+  if (this.path.substr(0, 5).toLowerCase() === '/api/') {
+    yield next;
+    return;
+  } else if (yield send(this, this.path, sendOpts)) {
+    return;
+  } else if (this.path.indexOf('.') !== -1) {
+    return;
+  } else {
+    this.status = 201;
+    this.body = yield render('index.jade', { locale: process.env.LOCALE });
+  }
+});
 
 app.use(function *serverErrors(next) {
   try {

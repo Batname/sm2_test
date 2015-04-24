@@ -12,6 +12,6 @@ let phonecatApp = angular.module('phonecatApp', ['ui.router', 'phoneModule', 'ho
 phonecatApp.config(["$urlRouterProvider", "$locationProvider",
   function($urlRouterProvider, $locationProvider) {
   $locationProvider.html5Mode(true);
-  $urlRouterProvider.otherwise("/");
+  $urlRouterProvider.otherwise("/phones");
 }]);
 

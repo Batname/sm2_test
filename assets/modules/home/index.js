@@ -11,7 +11,7 @@ import homeTemplate from "./templates/index.jade";
 let homeModule = angular.module('homeModule', ['ui.router', 'oc.lazyLoad']);
 
 homeModule.run(["$templateCache", function($templateCache) {
-  $templateCache.put('homeTemplate.html', `<style>${indexStyle}</style>homeTemplate()`);
+  $templateCache.put('homeTemplate.html', `<style>${indexStyle}</style>${homeTemplate()}`);
 }]);
 
 homeModule.config(["$stateProvider",

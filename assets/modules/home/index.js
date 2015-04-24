@@ -18,7 +18,7 @@ homeModule.config(["$stateProvider",
   function($stateProvider) {
   $stateProvider
     .state('home', {
-      url: "/",
+      url: "/home",
       templateProvider: ['$templateCache', function($templateCache){
         return $templateCache.get('homeTemplate.html');
       }],

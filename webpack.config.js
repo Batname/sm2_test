@@ -12,18 +12,17 @@ module.exports = {
     filename: "[name].js",
     chunkFilename: "[chunkhash].js"
   },
-  externals: {
-      // require("jquery") is external and available
-      //  on the global var jQuery
-      "jquery": "jQuery"
-  },
   module: {
     loaders: [
       { test: /\.css$/,loader: "style-loader!css-loader" },
       { test: /\.jade$/, loader: "jade" },
       { test: /\.json$/, loader: 'json' },
       { test: /\.js$/, exclude: /node_modules/, loader: 'babel-loader'},
-      { test: /\.scss$/, loader: "style!css!sass?includePaths[]=" + bourbon }
+      { test: /\.scss$/, loader: "style!css!sass?includePaths[]=" + bourbon },
+      {
+          test: /[\/\\]node_modules[\/\\]some-module[\/\\]index\.js$/,
+          loader: "imports?this=>window"
+      }
 
     ]
   },
@@ -41,6 +40,12 @@ module.exports = {
         manifestFiles: ['bower.json', '.bower.json'],
         includes: /.*/,
         excludes: /.*\.less$/
+    }),
+    new webpack.ProvidePlugin({
+        $: "jquery",
+        jQuery: "jquery",
+        "window.jQuery": "jquery",
+        "root.jQuery": "jquery"
     })
   ]
 };

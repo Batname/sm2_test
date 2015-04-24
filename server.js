@@ -24,20 +24,17 @@ app.use(serve('public'));
 
 app.use(route.get("/", function *() {
   let body, data;
-  body = yield render('index.jade', { locale: process.env.LOCALE });
+  body = yield render('index.jade', { locale: process.env.LOCALE , title: "Google Phone Gallery"});
   this.status = 201;
   this.body = body;
 }));
 
-app.use(route.get("/api/phones", function *() {
+app.use(route.get("/api/phones/:phoneId", function *(phoneId) {
   try{
     let file;
-    if(!this.query.file) {
-      this.throw(401, 'file not presante in query, ?file=sm');
-    }
-    file = yield fs.readFile(`${__dirname}/app/models/phones/${this.query.file}`, 'utf8');
+    file = yield fs.readFile(`${__dirname}/app/models/phones/${phoneId}`, 'utf8');
     this.status = 201;
-    this.body = { mesage: "success", responce: JSON.parse(file)}
+    this.body = JSON.parse(file)
   } catch (err) {
     this.status = err.status || 500;
     this.body = { mesage: err.message, status: this.status}

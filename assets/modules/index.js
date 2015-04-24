@@ -1,10 +1,12 @@
 import "angular";
 import 'angular-ui-router';
 import "./../styles/index.scss";
-import "babel!./home";
+import "./home";
 import "./phones";
-// var jQuery = require('jquery');
-// jQuery('body').html(template);
+// import jQuery from 'jquery';
+// jQuery('body').html("<hr />");
+
+
 let phonecatApp = angular.module('phonecatApp', ['ui.router', 'phoneModule', 'homeModule']);
 
 phonecatApp.config(["$urlRouterProvider", "$locationProvider",

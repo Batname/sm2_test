@@ -2,7 +2,7 @@ doctype html
 html(lang= locale, ng-app="phonecatApp")
   head
     base(href='/')
-    title= pageTitle
+    title= title
     link(href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css", rel="stylesheet")
   body
     hr
@@ -12,7 +12,7 @@ html(lang= locale, ng-app="phonecatApp")
       li
         a.lead(ui-sref="phones", style="color:white") phones
       li
-        a.lead(ui-sref="phonesDetails({phoneId: 10})", style="color:white") Phone id  
+        a.lead(ui-sref="phonesDetails({phoneId: 'nexus-s'})", style="color:white") Phone nexus
     hr
     div(ui-view)
     script(src="/bundle/phonecat.js")
